@@ -1,0 +1,62 @@
+Docker run (Corre un contenedor - baja la imagen si no lo tenes)
+Docker pull (Descarga la imagen)
+docker run alpine ls -l (Corre un contenedor alpine con el comando ls -l)
+docker run it alpine sh (Corre una shell dentro del contenedor)
+docker exec -it containerid sh (Corre una shell dentro del contenedor ya corriendo)
+docker run -it ubuntu /bin/bash (Linux: Levantar un ubuntu y mostrar consola)
+docker run -it ubuntu ./bin/bash (Windows:Levantar un ubuntu y mostrar consola)
+
+----------------------Todos estos containers mueren cuando se sale de la instancia
+
+Crear imagen a partir de otra
+
+docker commit CONTAINERID (crea una imagen este ubuntu tiene instalado figlet)
+docker image tag 3c42b0bd160c midocker (Tag a la imagen creada arriba)
+docker run midocker figlet hola (correr el contenedor con un comando)
+docker image history (Muestra el history de la imagen dentro de docker)
+docker run -d nginx:1.15.7 (-d corre el contenedor y lo deja corriendo)
+docker run -v $PWD/index.html:/usr/share/nginx/html/index.html:ro -p 8080:80 -d nginx:1.15.7
+(-v para compartir un archivo/carpeta de la local a un docker
+ -d corre el docker como servicio
+ -p expone en el puerto de la PC el puerto del docker
+ -e enviroment ejemplo MYSQL_ROOT_PASSWORD
+ :ro = read only
+ -
+ - )
+
+docker run -d alpine sleep 1d (arranca en un dia el docker)
+
+----------------------DockerFile
+vi dockerfile (Aca van als instrucciones)
+docker build -t nombre:1.1 . (Aca se crea una imagen a travez de docker file)
+
+----------------------Docker compose
+
+docker-compose up -d (Inicia el docker que se especifica en Docker compose)
+
+
+----------------------Docker Network
+
+-bridge : puente entre la interfaz de red al docker
+-host: pasa derecho el internet a al docker con el mismo IP
+-overlay: Crear una red entre los contenedores
+-macvlan: Asigna una mac a un contenedor
+-none: sin networking en el contenedor
+
+
+
+-----------------------Comandos docker
+docker save containerID > rsnapshot.tar  (Guarda/ carga la imagen de un contenedor)
+docker load containerID < rsnapshot.tar
+docker top containerID
+docker events (Muestra que pasa con los contenedores)
+docker diff containerID (ver la diferencia de un archivo entre que arranco y el estado actual)
+docker history containerID (ver las capas del dockerfile)
+docker pause/unpause containerID (pausar/ despausar contenedor)
+docker search wordpress (muestra las imagenes de docker hub)
+docker update --restart=unless-stopped containerID (Agregar parametros a un container corriendo
+en este caso le agregamos que inicie cuendo el host inicie)
+docker wait containerID (muestra la salida de error de un docker)
+
+docker network create nombreDeRed (crear una red)
+docker run -p 27017:27017 -d -e MONGO_INIT_DB_ROOT:USERNAME=ADMIN --name NombreContainer --net nombreDeRed mongo
